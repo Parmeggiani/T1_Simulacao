@@ -2,18 +2,18 @@
 
 class Filas:
 
-    def __init__(self, ocupantes, lista):
+    def __init__(self, ocupantes, capacidade):
         self.ocupantes = ocupantes
-        self.lista = lista
-        f = []
-        for _ in range(lista):
-            f.append(0)
+        self.capacidade = capacidade
+        self.lista = []
+        for _ in range(capacidade):
+            self.lista.append(0)
 
     def getOcupantes(self):
         return self.ocupantes
 
-    def getLista(self):
-        return self.lista
+    def getCapacidade(self):
+        return self.capacidade
 
     def atualizaTempo(self, index, elem):
         self.lista[index] += elem
