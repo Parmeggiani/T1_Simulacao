@@ -2,9 +2,10 @@
 
 class Filas:
 
-    def __init__(self, ocupantes, capacidade):
-        self.ocupantes = ocupantes
+    def __init__(self, capacidade, servidores):
         self.capacidade = capacidade
+        self.servidores = servidores
+        self.ocupantes = 0
         self.lista = []
         for _ in range(capacidade):
             self.lista.append(0)
@@ -14,6 +15,9 @@ class Filas:
 
     def getCapacidade(self):
         return self.capacidade
+
+    def getServidores(self):
+        return self.servidores
 
     def atualizaTempo(self, index, elem):
         self.lista[index] += elem
