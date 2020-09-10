@@ -19,9 +19,9 @@ def criaFilas():
         aux = aux.split(" ")
         filas.append(Filas(int(aux[0]), int(aux[1])))
         count+=1
-    aux_filas = filas
     while execucoes < 5:
-        filas = aux_filas
+        filas[0].modLista()
+        filas[0].setOcupantes()
         cal = f.readline()
         cal = cal.split(" ")
         randomicos = calcula(int(cal[0]), int(cal[1]), int(cal[2]), int(cal[3]))
@@ -97,7 +97,7 @@ def calculaMedia(calcula_media):
             result[index] += calcula_media[count][index]
         count+=1
     for i in range(len(result)):
-        result[index] = result[index] / 5
+        result[i] = result[i] / 5
     print("Media das execucoes ===> ",result)
 
 
