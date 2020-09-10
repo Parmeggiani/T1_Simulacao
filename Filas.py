@@ -1,5 +1,3 @@
-
-
 class Filas:
 
     def __init__(self, capacidade, servidores):
@@ -19,6 +17,9 @@ class Filas:
     def getServidores(self):
         return self.servidores
 
+    def getLista(self):
+        return self.lista
+
     def atualizaTempo(self, index, elem):
         self.lista[index] += elem
 
@@ -29,4 +30,4 @@ class Filas:
         self.ocupantes = self.ocupantes - 1
 
     def printLista(self):
-        print(self.lista)
+        print("TEMPOS DA FILA ===> ",self.lista)

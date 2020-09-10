@@ -11,18 +11,27 @@ def criaFilas():
     f = open("config.txt", "r")
     numero_filas = int(f.readline())
     count=0
+    execucoes=0
+    media_resultados = []
+    filas=[]
     while count < numero_filas:
         aux = f.readline()
         aux = aux.split(" ")
         filas.append(Filas(int(aux[0]), int(aux[1])))
         count+=1
-    cal = f.readline()
-    cal = cal.split(" ")
-    randomicos = calcula(int(cal[0]), int(cal[1]), int(cal[2]), int(cal[3]))
-    return randomicos
+    aux_filas = filas
+    while execucoes < 5:
+        filas = aux_filas
+        cal = f.readline()
+        cal = cal.split(" ")
+        randomicos = calcula(int(cal[0]), int(cal[1]), int(cal[2]), int(cal[3]))
+        main(randomicos,filas)
+        media_resultados.append(filas[0].getLista())
+        execucoes+=1
+    calculaMedia(media_resultados)
+    
 
-def main():
-    randomicos = criaFilas()
+def main(randomicos,filas):
 
     tempoAnterior = 0
 
@@ -41,7 +50,7 @@ def main():
         valor = randomicos[0]
 
         if str(agenda[int(indiceRetirada)].getEvento()) == "chegada":
-            filas[0].atualizaTempo(filas[0].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+            filas[0].atualizaTempo(filas[0].getOcupantes()-1, agenda[indiceRetirada].getTempo() - tempoAnterior)
             tempoAnterior = agenda[indiceRetirada].getTempo()
             if filas[0].getOcupantes() < filas[0].getCapacidade():
                 filas[0].addOcupante()
@@ -55,7 +64,7 @@ def main():
             randomicos.remove(valor)
 
         if agenda[indiceRetirada].getEvento() == "saida":
-            filas[0].atualizaTempo(filas[0].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+            filas[0].atualizaTempo(filas[0].getOcupantes()-1, agenda[indiceRetirada].getTempo() - tempoAnterior)
             tempoAnterior = agenda[indiceRetirada].getTempo()
             filas[0].subOcupante()
             if filas[0].getOcupantes() >= filas[0].getServidores():
@@ -72,10 +81,24 @@ def calcula(x0, a, m, c):
     count = 0
     while(count < m):
         randomico=(a * x0 + c) % m
+        randomico = randomico/m
         x0=randomico
         randomicos.append(randomico)
         count+=1
     return randomicos
 
+def calculaMedia(calcula_media):
+    count = 0
+    result = []
+    for _ in range(5):
+            result.append(0)
+    while count < 5:
+        for index in range(len(calcula_media[count])):
+            result[index] += calcula_media[count][index]
+        count+=1
+    for i in range(len(result)):
+        result[index] = result[index] / 5
+    print("Media das execucoes ===> ",result)
 
-main()
+
+criaFilas()
