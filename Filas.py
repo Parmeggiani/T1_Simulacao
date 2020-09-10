@@ -23,3 +23,6 @@ class Filas:
 
     def subOcupante(self):
         self.ocupantes = self.ocupantes - 1
+
+    def printLista(self):
+        print(self.lista)
