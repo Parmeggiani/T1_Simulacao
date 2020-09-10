@@ -14,7 +14,7 @@ class Agenda:
         return Agenda("saida", tempo + sort, sort)
 
     def getEvento(self):
-        return self.evento
+        return str(self.evento)
 
     def getTempo(self):
         return self.tempo
