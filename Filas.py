@@ -5,7 +5,7 @@ class Filas:
         self.servidores = servidores
         self.ocupantes = 0
         self.lista = []
-        for _ in range(capacidade):
+        for _ in range(capacidade+1):
             self.lista.append(0)
 
     def getOcupantes(self):

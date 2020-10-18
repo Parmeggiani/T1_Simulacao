@@ -6,11 +6,11 @@ class Agenda:
         self.sorteio = sorteio
 
     def agendamentoChegada(self, tempo, sorteio):
-        sort = (4 - 2) * sorteio + 2
+        sort = (2 - 1) * sorteio + 1
         return Agenda("chegada", tempo + sort, sort)
 
     def agendamentoSaida(self, tempo, sorteio):
-        sort = (5 - 3) * sorteio + 3
+        sort = (6 - 3) * sorteio + 3
         return Agenda("saida", tempo + sort, sort)
 
     def getEvento(self):
