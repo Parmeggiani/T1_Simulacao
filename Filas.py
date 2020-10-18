@@ -1,6 +1,6 @@
 class Filas:
 
-    def __init__(self, capacidade, servidores):
+    def __init__(self, servidores, capacidade):
         self.capacidade = capacidade
         self.servidores = servidores
         self.ocupantes = 0
@@ -31,11 +31,3 @@ class Filas:
 
     def printLista(self):
         print("TEMPOS DA FILA ===> ",self.lista)
-
-    def modLista(self):
-        self.lista = []
-        for _ in range(self.capacidade):
-            self.lista.append(0)
-    
-    def setOcupantes(self):
-        self.ocupantes = 0

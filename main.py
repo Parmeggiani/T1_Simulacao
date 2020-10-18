@@ -6,38 +6,33 @@ import random
 numero_filas = 0
 
 filas = []
+agenda = []
 
 def criaFilas():
     f = open("config.txt", "r")
     numero_filas = int(f.readline())
     count=0
-    execucoes=0
+    #execucoes=0
     media_resultados = []
     filas=[]
     while count < numero_filas:
         aux = f.readline()
         aux = aux.split(" ")
         filas.append(Filas(int(aux[0]), int(aux[1])))
-        print(filas[0].getCapacidade())
-        print(filas[0].getServidores())
+        print(len(filas))
         count+=1
-    #filas[0].modLista()
-    #filas[0].setOcupantes()
-    #cal = f.readline()
-    #cal = cal.split(" ")
-    #randomicos = calcula(int(cal[0]), int(cal[1]), int(cal[2]), int(cal[3]))
-    #main(randomicos,filas)
-    #media_resultados.append(filas[0].getLista())
-    randomicos = [0.3276,0.8851,0.1643,0.5542,0.6813,0.7221,0.9881]
+    cal = f.readline()
+    cal = cal.split(" ")
+    randomicos = calcula(int(cal[0]), int(cal[1]), int(cal[2]), int(cal[3]))
     main(randomicos,filas)
+    #media_resultados.append(filas[0].getLista())
+    #randomicos = [0.3276,0.8851,0.1643,0.5542,0.6813,0.7221,0.9881]
     #calculaMedia(media_resultados)
     
 
 def main(randomicos,filas):
 
     tempoAnterior = 0
-
-    agenda = []
 
     agenda.append(Agenda("chegada", 2, 0))
 
@@ -58,7 +53,8 @@ def main(randomicos,filas):
                 filas[0].addOcupante()
                 if filas[0].getOcupantes() <= filas[0].getServidores():
                     Agenda.agendamentoSaida(None, agenda[indiceRetirada].getTempo(), randomicos[0])
-                    agenda.append(Agenda.agendamentoSaida(None,agenda[indiceRetirada].getTempo(), randomicos[0]))
+                    ##Agenda para a Proxima fila
+                    agenda.append(Agenda.agendamentoProximo(None,agenda[indiceRetirada].getTempo(), randomicos[0]))
                     valor = randomicos[0]
                     randomicos.remove(valor)
             agenda.append(Agenda.agendamentoChegada(None, agenda[indiceRetirada].getTempo(), randomicos[0]))
@@ -72,14 +68,17 @@ def main(randomicos,filas):
             if filas[0].getOcupantes() >= filas[0].getServidores():
                 agenda.append(Agenda.agendamentoSaida(None, agenda[indiceRetirada].getTempo(), randomicos[0]))
                 randomicos.remove(valor)
-        print(filas[0].getLista())
+
+        if agenda[indiceRetirada].getEvento() == "proxima":
+
+
         remove_da_agenda = agenda[indiceRetirada]
         agenda.remove(remove_da_agenda)
     print("Tempo",tempoAnterior)
     filas[0].printLista()
 
 # Sorteia os números pseudo-aleatórios
-def calcula(x0, a, m, c):
+def calcula(x0, a, c, m):
     randomicos=[]
     count = 0
     while(count < m):
