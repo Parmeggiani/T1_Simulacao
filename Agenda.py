@@ -13,6 +13,10 @@ class Agenda:
         sort = (6 - 3) * sorteio + 3
         return Agenda("saida", tempo + sort, sort)
 
+    def agendamentoProximo(self, tempo, sorteio):
+        sort = (6 - 3) * sorteio + 3
+        return Agenda("proximo", tempo + sort, sort)
+
     def getEvento(self):
         return str(self.evento)
 
