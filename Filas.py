@@ -1,6 +1,8 @@
 class Filas:
 
     def __init__(self, servidores, capacidade):
+        if capacidade == 0:
+            capacidade = 100000
         self.capacidade = capacidade
         self.servidores = servidores
         self.ocupantes = 0
