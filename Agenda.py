@@ -43,5 +43,5 @@ class Agenda:
     def getPrevFila(self):
         return self.prevFila
 
-    def getNovaFila2(self):
-        return self.novoFila
+    def getNovaFila(self):
+        return self.novaFila

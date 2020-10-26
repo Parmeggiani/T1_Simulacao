@@ -50,11 +50,20 @@ def main(randomicos,filas):
         if agenda[indiceRetirada].getEvento() == "chegada":
             filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = chegada(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
 
-        if agenda[indiceRetirada].getEvento() == "saida":
-            filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = saida(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
+        else if agenda[indiceRetirada].getEvento() == "saida2":
+            filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = saida2(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
         
-        if agenda[indiceRetirada].getEvento() == "proximo":
-            proximo(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
+        else if agenda[indiceRetirada].getEvento() == "saida3":
+            filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = saida3(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
+
+        else if agenda[indiceRetirada].getEvento() == "proximo1":
+            filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = proximo1(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
+        
+        else if agenda[indiceRetirada].getEvento() == "proximo2":
+            filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = proximo2(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
+        
+        else if agenda[indiceRetirada].getEvento() == "proximo3":
+            filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = proximo3(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
 
         remove_da_agenda = agenda[indiceRetirada]
         agenda.remove(remove_da_agenda)
@@ -64,74 +73,152 @@ def main(randomicos,filas):
 
 def chegada(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior):
     filas[0].atualizaTempo(filas[0].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[1].atualizaTempo(filas[1].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[2].atualizaTempo(filas[2].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
     tempoAnterior = agenda[indiceRetirada].getTempo()
-    if filas[0].getOcupantes() < filas[0].getCapacidade():
-        filas[0].addOcupante()
-        if filas[0].getOcupantes() <= filas[0].getServidores():
-            if randint(0,1) <= 0.8:
-                agenda.append(Agenda.agendamentoProximo1(None,agenda[indiceRetirada].getTempo(), randomicos[0], 1, 2))
-            else:
-                agenda.append(Agenda.agendamentoProximo1(None,agenda[indiceRetirada].getTempo(), randomicos[0], 1, 3))
-            valor = randomicos[0]
-            randomicos.remove(valor)
-    agenda.append(Agenda.agendamentoChegada(None, agenda[indiceRetirada].getTempo(), randomicos[0], 0, 0))
+    filas[0].addOcupante()
+    if filas[0].getOcupantes() <= filas[0].getServidores():
+        if randint(0,1) <= 0.8:
+            agenda.append(Agenda.agendamentoProximo1(None,agenda[indiceRetirada].getTempo(), randomicos[0], 1, 2))
+        else:
+            agenda.append(Agenda.agendamentoProximo1(None,agenda[indiceRetirada].getTempo(), randomicos[0], 1, 3))
+        valor = randomicos[0]
+        randomicos.remove(valor)
+    agenda.append(Agenda.agendamentoChegada(None, agenda[indiceRetirada].getTempo(), randomicos[0], 1, 1))
     valor = randomicos[0]
     randomicos.remove(valor)
     return filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior
     
-def saida(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior):
+def saida2(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior):
     filas[0].atualizaTempo(filas[0].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[1].atualizaTempo(filas[1].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[2].atualizaTempo(filas[2].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
     tempoAnterior = agenda[indiceRetirada].getTempo()
-    filas[0].subOcupante()
-    if filas[0].getOcupantes() >= filas[0].getServidores():
-        agenda.append(Agenda.agendamentoSaida(None, agenda[indiceRetirada].getTempo(), randomicos[0]))
+    filas[1].subOcupante()
+    if filas[1].getOcupantes() >= filas[1].getServidores():
+        rand = randint(0,1)
+        if rand <= 0.5:
+            agenda.append(Agenda.agendamentoProximo2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 3))
+        if rand > 0.5 and rand <= 0.8:
+            agenda.append(Agenda.agendamentoProximo2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 1))
+        else:
+            agenda.append(Agenda.agendamentoSaida2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 2))
+        valor = randomicos[0]
+        randomicos.remove(valor)
+    return filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior
+
+def saida3(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior):
+    filas[0].atualizaTempo(filas[0].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[1].atualizaTempo(filas[1].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[2].atualizaTempo(filas[2].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    tempoAnterior = agenda[indiceRetirada].getTempo()
+    filas[2].subOcupante()
+    if filas[2].getOcupantes() >= filas[2].getServidores():
+        if randint(0,1) <= 0.7:
+            agenda.append(Agenda.agendamentoProximo3(None,agenda[indiceRetirada].getTempo(), randomicos[0], 3, 2))
+        else:
+            agenda.append(Agenda.agendamentoSaida3(None,agenda[indiceRetirada].getTempo(), randomicos[0], 3, 3))
         valor = randomicos[0]
         randomicos.remove(valor)
     return filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior
 
 def proximo1(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior):
     filas[0].atualizaTempo(filas[0].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[1].atualizaTempo(filas[1].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[2].atualizaTempo(filas[2].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
     tempoAnterior = agenda[indiceRetirada].getTempo()
-    valor = randomicos[0]
     filas[0].subOcupante()
     if filas[0].getOcupantes() >= filas[0].getServidores():
         if randint(0,1) <= 0.8:
             agenda.append(Agenda.agendamentoProximo1(None,agenda[indiceRetirada].getTempo(), randomicos[0], 1, 2))
-            filas[1].addOcupante()
-            if filas[1].getOcupantes() <= filas[1].getServidores():
-                randomicos.remove(valor)
-                filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = proximo2(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
         else:
             agenda.append(Agenda.agendamentoProximo1(None,agenda[indiceRetirada].getTempo(), randomicos[0], 1, 3))
-            filas[2].addOcupante()
-            if filas[2].getOcupantes() <= filas[2].getServidores():
-                randomicos.remove(valor)
-                filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = proximo3(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
-
+        valor = randomicos[0]
+        randomicos.remove(valor)
+    indexFila = agenda[indiceRetirada].getNovaFila()-1
+    if(filas[indexFila].getOcupantes() < filas[indexFila].getCapacidade()):
+        filas[indexFila].addOcupante()
+    if(filas[indexFila].getOcupantes() <= filas[indexFila].getServidores()):
+        if(indexFila+1 == 2):
+            rand = randint(0,1)
+            if rand <= 0.5:
+                agenda.append(Agenda.agendamentoProximo2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 3))
+            if rand > 0.5 and rand <= 0.8:
+                agenda.append(Agenda.agendamentoProximo2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 1))
+            else:
+                agenda.append(Agenda.agendamentoSaida2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 2))
+        else:
+            if randint(0,1) <= 0.7:
+                agenda.append(Agenda.agendamentoProximo3(None,agenda[indiceRetirada].getTempo(), randomicos[0], 3, 2))
+            else:
+                agenda.append(Agenda.agendamentoSaida3(None,agenda[indiceRetirada].getTempo(), randomicos[0], 3, 3))
+        valor = randomicos[0]
+        randomicos.remove(valor)
     return filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior
     
 def proximo2(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior):
-    valor = randomicos[0]
+    filas[0].atualizaTempo(filas[0].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[1].atualizaTempo(filas[1].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[2].atualizaTempo(filas[2].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    tempoAnterior = agenda[indiceRetirada].getTempo()
     filas[1].subOcupante()
     if filas[1].getOcupantes() >= filas[1].getServidores():
         rand = randint(0,1)
         if rand <= 0.5:
             agenda.append(Agenda.agendamentoProximo2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 3))
-            filas[2].addOcupante()
-            if filas[2].getOcupantes() <= filas[2].getServidores():
-                randomicos.remove(valor)
-                filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = proximo3(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
         if rand > 0.5 and rand <= 0.8:
             agenda.append(Agenda.agendamentoProximo2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 1))
-            filas[0].addOcupante()
-            if filas[0].getOcupantes() <= filas[0].getServidores():
-                randomicos.remove(valor)
-                filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = proximo1(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
         else:
             agenda.append(Agenda.agendamentoSaida2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 2))
-            randomicos.remove(valor)
-            filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior = saida(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior)
-        
+        valor = randomicos[0]
+        randomicos.remove(valor)
+    indexFila = agenda[indiceRetirada].getNovaFila()-1
+    if(filas[indexFila].getOcupantes() < filas[indexFila].getCapacidade()):
+        filas[indexFila].addOcupante()
+    if(filas[indexFila].getOcupantes() <= filas[indexFila].getServidores()):
+        if(indexFila+1 == 1):
+            if randint(0,1) <= 0.8:
+                agenda.append(Agenda.agendamentoProximo1(None,agenda[indiceRetirada].getTempo(), randomicos[0], 1, 2))
+            else:
+                agenda.append(Agenda.agendamentoProximo1(None,agenda[indiceRetirada].getTempo(), randomicos[0], 1, 3))
+        else:
+            if randint(0,1) <= 0.7:
+                agenda.append(Agenda.agendamentoProximo3(None,agenda[indiceRetirada].getTempo(), randomicos[0], 3, 2))
+            else:
+                agenda.append(Agenda.agendamentoSaida3(None,agenda[indiceRetirada].getTempo(), randomicos[0], 3, 3))
+        valor = randomicos[0]
+        randomicos.remove(valor)
+    return filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior
+
+def proximo3(filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior):
+    filas[0].atualizaTempo(filas[0].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[1].atualizaTempo(filas[1].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    filas[2].atualizaTempo(filas[2].getOcupantes(), agenda[indiceRetirada].getTempo() - tempoAnterior)
+    tempoAnterior = agenda[indiceRetirada].getTempo()
+    filas[2].subOcupante()
+    if filas[2].getOcupantes() >= filas[2].getServidores():
+        if randint(0,1) <= 0.7:
+            agenda.append(Agenda.agendamentoProximo3(None,agenda[indiceRetirada].getTempo(), randomicos[0], 3, 2))
+        else:
+            agenda.append(Agenda.agendamentoSaida3(None,agenda[indiceRetirada].getTempo(), randomicos[0], 3, 3))
+        valor = randomicos[0]
+        randomicos.remove(valor)
+    indexFila = agenda[indiceRetirada].getNovaFila()-1
+    if(filas[indexFila].getOcupantes() < filas[indexFila].getCapacidade()):
+        filas[indexFila].addOcupante()
+    if(filas[indexFila].getOcupantes() <= filas[indexFila].getServidores()):
+        rand = randint(0,1)
+        if rand <= 0.5:
+            agenda.append(Agenda.agendamentoProximo2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 3))
+        if rand > 0.5 and rand <= 0.8:
+            agenda.append(Agenda.agendamentoProximo2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 1))
+        else:
+            agenda.append(Agenda.agendamentoSaida2(None,agenda[indiceRetirada].getTempo(), randomicos[0], 2, 2))
+        valor = randomicos[0]
+        randomicos.remove(valor)
+    return filas, agenda, indiceRetirada, randomicos, valor, tempoAnterior
+    
+
 # Sorteia os números pseudo-aleatórios
 def calcula(x0, a, c, m):
     randomicos=[]

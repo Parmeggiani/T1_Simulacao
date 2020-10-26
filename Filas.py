@@ -22,8 +22,8 @@ class Filas:
     def getLista(self):
         return self.lista
 
-    def atualizaTempo(self, index, elem):
-        self.lista[index] += elem
+    def atualizaTempo(self, index, temp):
+        self.lista[index] += temp
 
     def addOcupante(self):
         self.ocupantes = self.ocupantes + 1
