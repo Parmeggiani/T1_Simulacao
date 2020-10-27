@@ -32,4 +32,4 @@ class Filas:
         self.ocupantes = self.ocupantes - 1
 
     def printLista(self):
-        print("TEMPOS DA FILA ===> ",self.lista)
+        print("TEMPOS ===> ",self.lista)
