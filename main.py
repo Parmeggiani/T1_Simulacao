@@ -337,7 +337,7 @@ def proximo3(filas, agenda, indiceRetirada, randomicos, tempoGlobal, perdaFila2)
 def calcula(x0, a, c, m):
     randomicos=[]
     count = 0
-    while(count < m):
+    while(count < 100000):
         randomico=(a * x0 + c) % m
         x0=randomico
         randomico = randomico/m
